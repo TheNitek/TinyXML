@@ -2,7 +2,7 @@
 #define TinyXML_h
 
 #include <inttypes.h>
-typedef void (*XMLcallback) (uint8_t errorflag, char* nameBuffer,  uint16_t namebuflen, char* dataBuffer,  uint16_t databuflen);
+typedef std::function<void(uint8_t errorflag, char* nameBuffer,  uint16_t namebuflen, char* dataBuffer,  uint16_t databuflen)> XMLcallback;
 
 #define isAlpha(ch) ((ch >= 'A' && ch <= 'Z') || (ch>='a' && ch<='z'))
 #define isNumeric(ch) (ch >= '0' && ch <= '9')
