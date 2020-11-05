@@ -222,7 +222,7 @@ void TinyXML::action(uint8_t ch, uint8_t actionType)
     dataBufferPtr = 0;
     break;
   case addtoattrname:
-    attrBuffer[attrBufferPtr++] = ch;
+    if (attrBufferPtr < ATTRBUFFERMAX-2) attrBuffer[attrBufferPtr++] = ch;
     break;
   case setquotechar:
     matchQuote = ch;

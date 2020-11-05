@@ -16,7 +16,6 @@ typedef std::function<void(uint8_t errorflag, char* nameBuffer,  uint16_t namebu
 #define STATUS_END_TAG   0x08
 #define STATUS_ERROR     0x10
 
-#define DEFAULT_BUFFER_SIZE 256
 #define TAGBUFFERMAX 128
 #define ATTRBUFFERMAX 64
 #define CHECKTAGMAX 64
@@ -32,7 +31,7 @@ private:
   uint8_t currentState;
   uint8_t matchQuote;
   uint8_t LTCount;
-  uint8_t tagCount;
+  int8_t tagCount;
   uint8_t* dataBuffer;
   uint16_t maxDataLen;
   uint16_t dataBufferPtr;
