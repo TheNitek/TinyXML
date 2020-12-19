@@ -30,7 +30,7 @@ private:
   uint16_t attrBufferPtr;
   uint8_t currentState;
   uint8_t matchQuote;
-  uint8_t LTCount;
+  int8_t LTCount;
   int8_t tagCount;
   uint8_t* dataBuffer;
   uint16_t maxDataLen;

@@ -93,7 +93,7 @@ void TinyXML::processChar(uint8_t ch)
 #endif
       currentState++;
     }
-  } // as every table enry must end in anychar we must get out of here
+  } // as every table entry must end in anychar we must get out of here
 
 #if DEBUG > 2
   Serial.print("Matching state:");
