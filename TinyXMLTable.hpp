@@ -53,6 +53,8 @@
 #define InAttrGetValue     InAttr+3
 #define InAttrGetValue1    InAttrGetValue+6
 #define InAttrGetValue2    InAttrGetValue1+2
+#define IgnoreCDATA        InAttrGetValue2+4
+#define IgnoreToCDATAEnd   IgnoreCDATA+14
 
 struct parseTable {
   uint16_t   charToParse;
@@ -70,7 +72,7 @@ const parseTable stateTable[] = {
 /* 04 2                   */  {anychar,       storeifneeded,     donothing,       Init1},
 
 /* 05 TagStart            */  {'?',           cleartagname,      donothing,       IgnoreToGT},       // start of a tag name
-/* 06 2                   */  {'!',           cleartagname,      donothing,       IgnoreToGT},       // start of a tag name
+/* 06 2                   */  {'!',           cleartagname,      donothing,       IgnoreCDATA},       // start of a tag name
 /* 07 3                   */  {'/',           cleartagendname,   donothing,       TagEnd},
 /* 08 4                   */  {alpha,         addtotagname,      donothing,       TagName},
 /* 09 5                   */  {anychar,       error,             initialise,      Init},
@@ -118,7 +120,29 @@ const parseTable stateTable[] = {
 /* 41 InAttrGetValue2     */  {whiteSpace,    clearattrname,     donothing,       InTag},          // process <tag...>
 /* 42 2                   */  {'/',           donothing,         donothing,       IgnoreTagToGTEnd},
 /* 43 3                   */  {'>',           decLTcount,        donothing,       Init},
-/* 44 4                   */  {anychar,       error,             initialise,      Init}
+/* 44 4                   */  {anychar,       error,             initialise,      Init},
+
+/* 45 IgnoreCDATA         */  {'[',           donothing,         donothing,       IgnoreCDATA+2},             // handle <![CDATA[...]
+/* 46 2                   */  {anychar,       donothing,         donothing,       IgnoreToGT},
+/* 47 3                   */  {'C',           donothing,         donothing,       IgnoreCDATA+4},
+/* 48 4                   */  {anychar,       donothing,         donothing,       IgnoreToGT},
+/* 49 5                   */  {'D',           donothing,         donothing,       IgnoreCDATA+6},
+/* 50 6                   */  {anychar,       donothing,         donothing,       IgnoreToGT},
+/* 51 7                   */  {'A',           donothing,         donothing,       IgnoreCDATA+8},
+/* 52 8                   */  {anychar,       donothing,         donothing,       IgnoreToGT},
+/* 53 9                   */  {'T',           donothing,         donothing,       IgnoreCDATA+10},
+/* 54 10                  */  {anychar,       donothing,         donothing,       IgnoreToGT},
+/* 55 11                  */  {'A',           donothing,         donothing,       IgnoreCDATA+12},
+/* 56 12                  */  {anychar,       donothing,         donothing,       IgnoreToGT},
+/* 57 13                  */  {'[',           donothing,         donothing,       IgnoreToCDATAEnd},
+/* 58 14                  */  {anychar,       donothing,         donothing,       IgnoreToGT},
+
+/* 59 IgnoreToCDATAEnd    */  {']',           donothing,         donothing,       IgnoreToCDATAEnd+2},             // handle <![CDATA[...]
+/* 60 2                   */  {anychar,       donothing,         donothing,       IgnoreToCDATAEnd},
+/* 61 3                   */  {']',           donothing,         donothing,       IgnoreToCDATAEnd+4},
+/* 62 4                   */  {anychar,       donothing,         donothing,       IgnoreToCDATAEnd},
+/* 63 5                   */  {'>',           decLTcount,        donothing,       Init},
+/* 64 6                   */  {anychar,       donothing,         donothing,       IgnoreToCDATAEnd},
 
 };
 
