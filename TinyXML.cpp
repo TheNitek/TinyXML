@@ -141,7 +141,7 @@ void TinyXML::action(uint8_t ch, uint8_t actionType)
     dataBuffer[dataBufferPtr] = 0; // terminate the text
     // call back if the previous tag text is required
     tagBuffer[tagBufferPtr] = 0;
-    if (tagBufferPtr && dataBufferPtr) Xcb(STATUS_TAG_TEXT,(char*)tagBuffer,tagBufferPtr,(char*)dataBuffer,dataBufferPtr);
+    if (tagBufferPtr && dataBufferPtr) Xcb(XML_STATUS_TAG_TEXT,(char*)tagBuffer,tagBufferPtr,(char*)dataBuffer,dataBufferPtr);
     dataBufferPtr = 0;    // clear down for next time
 #if DEBUG > 2
     Serial.print("starttagname Tag:");
@@ -162,7 +162,7 @@ void TinyXML::action(uint8_t ch, uint8_t actionType)
   case inctagcount:
     tagCount++;
     tagBuffer[tagBufferPtr] = 0;
-    Xcb(STATUS_START_TAG,(char*)tagBuffer,tagBufferPtr,0,0);
+    Xcb(XML_STATUS_START_TAG,(char*)tagBuffer,tagBufferPtr,0,0);
 #if DEBUG > 2
     Serial.print("incTagCount:");
     Serial.print(tagCount,DEC);
@@ -177,7 +177,7 @@ void TinyXML::action(uint8_t ch, uint8_t actionType)
 		break;
 	}
     tagBuffer[tagBufferPtr] = 0;
-    Xcb(STATUS_END_TAG,(char*)tagBuffer,tagBufferPtr,0,0);
+    Xcb(XML_STATUS_END_TAG,(char*)tagBuffer,tagBufferPtr,0,0);
     while (tagBufferPtr && tagBuffer[--tagBufferPtr] != '/'); // as we error if tagBuffer overflows then this will be safe
 #if DEBUG > 3
     tagBuffer[tagBufferPtr] = 0;
@@ -205,7 +205,7 @@ void TinyXML::action(uint8_t ch, uint8_t actionType)
 	}
     tagBufferPtr--;      // we have had a start so back past the last '/' we placed when the tag started
     tagBuffer[tagBufferPtr] = 0;
-    Xcb(STATUS_END_TAG,(char*)tagBuffer,tagBufferPtr,0,0);
+    Xcb(XML_STATUS_END_TAG,(char*)tagBuffer,tagBufferPtr,0,0);
     while (tagBufferPtr && tagBuffer[--tagBufferPtr] != '/'); // as we error if tagBuffer overflows then this will be safe
 #if DEBUG > 3
     tagBuffer[tagBufferPtr] = 0;
@@ -233,10 +233,10 @@ void TinyXML::action(uint8_t ch, uint8_t actionType)
   case gotattrvalue:
     attrBuffer[attrBufferPtr] = 0;
     dataBuffer[dataBufferPtr] = 0;
-    Xcb(STATUS_ATTR_TEXT,(char*)attrBuffer,attrBufferPtr,(char*)dataBuffer,dataBufferPtr);
+    Xcb(XML_STATUS_ATTR_TEXT,(char*)attrBuffer,attrBufferPtr,(char*)dataBuffer,dataBufferPtr);
     break;
   case error:
-    Xcb(STATUS_ERROR,(char*)tagBuffer,tagBufferPtr,(char*)dataBuffer,dataBufferPtr);
+    Xcb(XML_STATUS_ERROR,(char*)tagBuffer,tagBufferPtr,(char*)dataBuffer,dataBufferPtr);
     reset();
    break;
   case initialise:

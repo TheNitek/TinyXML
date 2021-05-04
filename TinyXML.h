@@ -10,11 +10,11 @@ typedef std::function<void(uint8_t errorflag, char* nameBuffer,  uint16_t namebu
 //
 // Status flags
 //
-#define STATUS_START_TAG 0x01
-#define STATUS_TAG_TEXT  0x02
-#define STATUS_ATTR_TEXT 0x04
-#define STATUS_END_TAG   0x08
-#define STATUS_ERROR     0x10
+#define XML_STATUS_START_TAG 0x01
+#define XML_STATUS_TAG_TEXT  0x02
+#define XML_STATUS_ATTR_TEXT 0x04
+#define XML_STATUS_END_TAG   0x08
+#define XML_STATUS_ERROR     0x10
 
 #define TAGBUFFERMAX 128
 #define ATTRBUFFERMAX 64

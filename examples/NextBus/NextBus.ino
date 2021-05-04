@@ -71,7 +71,7 @@ uint32_t   seconds[2];
 // two-element int array named 'seconds' and moved to stop struct later.
 void XML_callback(uint8_t statusflags, char* tagName,
  uint16_t tagNameLen, char* data, uint16_t dataLen) {
-  if((statusflags & STATUS_ATTR_TEXT) && !strcasecmp(tagName, "seconds")) {
+  if((statusflags & XML_STATUS_ATTR_TEXT) && !strcasecmp(tagName, "seconds")) {
     uint32_t t = atoi(data); // Prediction in seconds (0 if gibberish)
     Serial.print(t); Serial.println(" seconds");
     if(t >= (MIN_TIME * 60)) {        // Above our "too soon" threshold?
